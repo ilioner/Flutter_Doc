@@ -119,15 +119,7 @@ class layout_state extends State<layout_view>{
     // TODO: implement build
     Widget divider=Divider(color: Colors.black12);//分割线
     return new Scaffold(
-      appBar: new AppBar(
-        title: new Text("布局一览"),
-        leading: new IconButton(
-          icon: new Icon(Icons.arrow_back),
-          onPressed: (){
-            Navigator.pop(context);
-          },
-        ),
-      ),
+    
       body: new ListView.separated(
         itemCount: this.items.length,
         separatorBuilder: (BuildContext context, int index){

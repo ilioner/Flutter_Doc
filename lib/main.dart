@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'layout_view.dart';
+import 'Widgets_view.dart';
 
 void main() => runApp(MyApp());
 
@@ -46,17 +47,23 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
 
-  List<String> items = new List<String>();
+  List<Widget> items = new List<Widget>();
+  int _currentIndex = 1;
+  List<String> titles = new List<String>();
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    items.add("布局");
-    items.add("组件");
+    items.add(layout_view());
+    items.add(Widgets_view());
+
+    titles.add("布局一览");
+    titles.add("组件一览");
   }
 
   @override
   Widget build(BuildContext context) {
+    
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
     //
@@ -70,22 +77,25 @@ class _MyHomePageState extends State<MyHomePage> {
         // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
       ),
-      body: ListView.separated(
-          itemCount: items.length,
-          separatorBuilder: (BuildContext context, int index) {
-            return divider;
-          },
-          itemBuilder: (BuildContext context, int index) {
-            return ListTile(
-                title: Text(items[index].toString()),
-                onTap: (){
-                 if (index==0) {
-                    Navigator.push(context, new MaterialPageRoute(builder: (context)=>new layout_view()));
-                 }
-                },
-            );
-          }
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      body: items[_currentIndex], 
+      bottomNavigationBar: new BottomNavigationBar(
+        items: [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home,color: Colors.blue,),
+            title: Text("布局",style: TextStyle(color: Colors.blue),)
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.pages,color: Colors.blue,),
+            title: Text("组件",style: TextStyle(color: Colors.blue),)
+          ),
+        ],
+        currentIndex: _currentIndex,
+        onTap: (int index){
+          setState(() {
+            _currentIndex = index;
+          });
+        },
+      ),// This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
